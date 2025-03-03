@@ -26,14 +26,13 @@ echo 'KERNEL=="loop0", ENV{UDISKS_IGNORE}="1"' > /etc/udev/rules.d/10-bootc.rule
 dnf install -x cockpit,kmod-kvdo,PackageKit,PackageKit-command-not-found,vdo -y \
   alsa-sof-firmware \
   @base \
-  @base-x \
+  centos-backgrounds \
   containernetworking-plugins \
   firefox \
   @fonts \
   gdm \
   @gnome-desktop \
   @guest-desktop-agents \
-  gnome-tweaks \
   @hardware-support \
   man-db \
   @networkmanager-submodules \

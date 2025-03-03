@@ -48,10 +48,10 @@ jobs:
         run: dnf install -y --allowerasing lorax util-linux skopeo curl
       - name: Download container
         run: skopeo copy docker://ghcr.io/calciteauthors/calcite:latest oci:container
-      - name: Download Rocky Linux
-        run: curl -Ls -o rocky.iso https://nyc.mirrors.clouvider.net/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-boot.iso
+      - name: Download CentOS Stream
+        run: curl -Ls -o upstream.iso https://mirror.stream.centos.org/10-stream/BaseOS/x86_64/os/images/boot.iso
       - name: Run mkksiso
-        run: mkksiso -a container ks.cfg rocky.iso calcite.iso
+        run: mkksiso -a container ks.cfg upstream.iso calcite.iso
       - uses: actions/upload-artifact@v4
         name: Upload
         with:
