@@ -45,10 +45,6 @@ dnf install -y dnf-plugins-core
 
 # System configuration
 
-## Add Flathub
-mkdir -p /etc/flatpak/remotes.d
-curl -o /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo
-
 ## Firewall
 dnf install -y firewalld
 systemctl enable firewalld
