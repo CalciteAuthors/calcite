@@ -41,7 +41,7 @@ jobs:
     name: Build & upload ISO
     needs: build_and_push_container
     runs-on: ubuntu-24.04
-    container: fedora:41
+    container: quay.io/fedora/fedora:41
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
