@@ -32,7 +32,7 @@ jobs:
           set -euxo pipefail
           digest=$(podman pull ${{steps.rechunk.outputs.ref}})
           sudo rm -rf ${{steps.rechunk.outputs.location}}
-          for tag in latest r9 9; do
+          for tag in latest c10s 10; do
             podman tag $digest ghcr.io/calciteauthors/calcite:${tag}
             podman push ghcr.io/calciteauthors/calcite:${tag}
           done
