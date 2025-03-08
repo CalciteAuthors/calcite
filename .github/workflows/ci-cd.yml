@@ -63,7 +63,7 @@ jobs:
         uses: ublue-os/bootc-image-builder-action@main
         id: iso-build
         with:
-          config-file: iso.toml
+          config-file: config.toml
           type: iso
           image: ghcr.io/calciteauthors/calcite:main
       - name: Upload ISO
