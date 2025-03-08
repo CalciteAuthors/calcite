@@ -24,8 +24,6 @@ jobs:
       - name: Install cosign
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@v3
-        with:
-          cosign-release: 'v2.4.3'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Log into registry ${{ env.REGISTRY }}
@@ -66,7 +64,7 @@ jobs:
         id: iso-build
         with:
           config-file: iso.toml
-          type: anaconda-iso
+          type: iso
           image: ghcr.io/calciteauthors/calcite:main
       - name: Upload ISO
         uses: actions/upload-artifact@v4
