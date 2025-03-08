@@ -59,6 +59,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: container
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Build ISO
         uses: ublue-os/bootc-image-builder-action@main
         id: iso-build
