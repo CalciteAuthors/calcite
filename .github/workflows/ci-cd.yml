@@ -56,22 +56,28 @@ jobs:
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
   iso:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     needs: container
+    container:
+      image: quay.io/fedora/fedora:41
+      options: --privileged
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Install dependencies
+        run: dnf install -y lorax util-linux
+      - name: Download upstream ISO
+        run: curl -Lso upstream.iso https://nyc.mirrors.clouvider.net/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-boot.iso
       - name: Build ISO
-        uses: ublue-os/bootc-image-builder-action@main
-        id: iso-build
+        run: mkksiso ks.cfg upstream.iso calcite-9.iso
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          config-file: config.toml
-          type: iso
-          image: ghcr.io/calciteauthors/calcite:main
-      - name: Upload ISO
-        uses: actions/upload-artifact@v4
-        with:
-          name: iso
-          path: |
-            ${{steps.iso-build.outputs.iso-path}}
-            ${{steps.iso-build.outputs.checksum-path}}
+          name: Continuous
+          tag_name: continuous
+          body: |
+            > [!WARNING]  
+            > Installation **WILL FAIL** if there is no network connection set up while installing. If you can't provide one, **DO NOT INSTALL THIS SOFTWARE.**
+          files: calcite-9.iso
