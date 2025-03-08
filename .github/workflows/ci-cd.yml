@@ -73,6 +73,7 @@ jobs:
       - name: Build ISO
         run: mkksiso ks.cfg upstream.iso calcite-9.iso
       - name: Release
+        if: ${{ github.event_name != 'pull_request' }}
         uses: softprops/action-gh-release@v2
         with:
           name: Continuous
