@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This launches a VM,
+# This launches a VM.
 # You will need localhost/calcite:latest in root's container storage. To do that, run this as root:
 # # podman build -t localhost/calcite:latest .
 # Alternatively, use another URL in the CONTAINER environment variable.
