@@ -1,5 +1,7 @@
 # Calcite
 
+[![Docker](https://github.com/CalciteAuthors/calcite/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/CalciteAuthors/calcite/actions/workflows/docker-publish.yml)
+
 This project replicates Kinoite but using bootc, and uses Rocky Linux instead of Fedora.
 
 ## Scope
