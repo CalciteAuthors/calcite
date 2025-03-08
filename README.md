@@ -1,6 +1,6 @@
 # Calcite
 
-[![Docker](https://github.com/CalciteAuthors/calcite/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/CalciteAuthors/calcite/actions/workflows/docker-publish.yml)
+[![CI/CD](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml)
 
 This project replicates Kinoite but using bootc, and uses Rocky Linux instead of Fedora.
 
