@@ -1,4 +1,4 @@
-name: Docker
+name: CI/CD
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -98,3 +98,18 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+  iso:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ublue-os/bootc-image-builder-action@1b6c5a5726729139d8a9e59a88978d837b3c8e20
+        id: iso-build
+        with:
+          config-file: iso.toml
+          type: anaconda-iso
+          image: ghcr.io/calciteauthors/calcite:main
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: iso
+          path: |
+            ${{steps.iso-build.outputs.iso-path}}
+            ${{steps.iso-build.outputs.checksum-path}}
