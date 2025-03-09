@@ -26,7 +26,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      @fonts \
      @guest-desktop-agents \
      @hardware-support \
-     @input-methods
+     @input-methods \
      @networkmanager-submodules \
      @print-client \
      alsa-firmware \
