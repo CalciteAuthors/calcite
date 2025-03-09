@@ -2,6 +2,10 @@ FROM ghcr.io/charles8191/rocky-bootc:r9
 
 ARG EXCLUSIONS=PackageKit
 
+# A package would create /var/run, this is a fix
+
+ln -sf /run /var/run
+
 # Shortly after IBM took over Red Hat, they removed KDE.
 # So we have to use EPEL.
 # EPEL recommends enabling CRB, so we do that too.
@@ -13,7 +17,13 @@ RUN dnf install epel-release -y && \
 
 RUN dnf install -x $EXCLUSIONS -y plasma-workspace
 
+# Fix rootfiles
+
+mkdir -m 0700 -p /var/roothome
+
 RUN dnf install -x $EXCLUSIONS -y \
+     @base \
+     @core \
      @fonts \
      @guest-desktop-agents \
      @hardware-support \
@@ -39,6 +49,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      plasma-systemsettings \
      plymouth \
      plymouth-system-theme \
+     rootfiles \
      sddm \
      sddm-breeze \
      wget \
@@ -46,7 +57,12 @@ RUN dnf install -x $EXCLUSIONS -y \
 
 RUN systemctl set-default graphical.target
 
-# Fix Plymouth
+# System would have random reboots due to auto updates from bootc
+
+RUN sed -i 's,ExecStart=/usr/bin/bootc update --apply --quiet,ExecStart=/usr/bin/bootc update --quiet,g' \
+  /usr/lib/systemd/system/bootc-fetch-apply-updates.service
+
+# Plymouth wouldn't show otherwise
 
 RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
     dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
