@@ -23,10 +23,10 @@ RUN mkdir -m 0700 -p /var/roothome
 
 RUN dnf install -x $EXCLUSIONS -y \
      @base \
-     @core \
      @fonts \
      @guest-desktop-agents \
      @hardware-support \
+     @input-methods
      @networkmanager-submodules \
      @print-client \
      alsa-firmware \
