@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{github.repository}}
 jobs:
   container:
     runs-on: ubuntu-latest
@@ -26,34 +26,34 @@ jobs:
         uses: sigstore/cosign-installer@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into registry ${{env.REGISTRY}}
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{env.REGISTRY}}
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: ${{github.event_name != 'pull_request'}}
+          tags: ${{steps.meta.outputs.tags}}
+          labels: ${{steps.meta.outputs.labels}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Containerfile
       - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{github.event_name != 'pull_request'}}
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{steps.meta.outputs.tags}}
+          DIGEST: ${{steps.build-and-push.outputs.digest}}
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
   iso:
     permissions:
@@ -66,14 +66,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Get year & month
+        id: get-ym
+        run: |
+          echo "ym=$(/bin/date -u '+%Y%m')" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Cache ISO
+        id: cache-iso
+        uses: actions/cache@v4
+        with:
+          path: calcite-9.iso
+          key: ${{steps.get-ym.outputs.ym}}-${{hashFiles('ks.cfg')}}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: dnf install -y lorax util-linux
       - name: Download upstream ISO
+        if: steps.cache.outputs.cache-hit != 'true'
         run: curl -Lso upstream.iso https://nyc.mirrors.clouvider.net/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-boot.iso
       - name: Build ISO
+        if: steps.cache.outputs.cache-hit != 'true'
         run: mkksiso ks.cfg upstream.iso calcite-9.iso
       - name: Release
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{github.event_name != 'pull_request'}}
         uses: softprops/action-gh-release@v2
         with:
           name: Continuous
