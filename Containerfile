@@ -24,10 +24,12 @@ RUN dnf install -x $EXCLUSIONS -y \
      kcalc \
      konsole \
      kscreen \
+     linux-firmware \
      mozilla-openh264 \
      plasma-breeze \
      plasma-discover \
      plasma-discover-flatpak \
+     plasma-nm \
      plasma-systemmonitor \
      plasma-systemsettings \
      plymouth \
