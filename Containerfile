@@ -15,9 +15,13 @@ RUN dnf install -x $EXCLUSIONS -y plasma-workspace
 
 RUN dnf install -x $EXCLUSIONS -y \
      @fonts \
+     @guest-desktop-agents \
+     @hardware-support \
      @networkmanager-submodules \
+     @print-client \
      alsa-firmware \
      alsa-sof-firmware \
+     containernetworking-plugins \
      dolphin \
      firefox \
      flatpak \
@@ -25,6 +29,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      konsole \
      kscreen \
      linux-firmware \
+     man-db \
      mozilla-openh264 \
      plasma-breeze \
      plasma-discover \
