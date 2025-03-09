@@ -1,6 +1,16 @@
 FROM ghcr.io/charles8191/rocky-bootc:r9
 
+# Software stores typically break because they attempt to install an RPM and it doesn't work
+
 ARG EXCLUSIONS=PackageKit
+
+# Fix /opt and /usr/local
+
+RUN mv /opt /var/opt && \
+  ln -sf /var/opt /opt
+
+RUN mv /usr/local /var/usrlocal && \
+  ln -sf /var/usrlocal /usr/local
 
 # A package would create /var/run, this is a fix
 
@@ -54,6 +64,8 @@ RUN dnf install -x $EXCLUSIONS -y \
      sddm-breeze \
      wget \
      wpa_supplicant
+
+RUN dnf remove -y console-login-helper-messages{,-profile}
 
 RUN systemctl set-default graphical.target
 
