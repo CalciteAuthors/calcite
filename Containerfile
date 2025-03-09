@@ -4,7 +4,7 @@ ARG EXCLUSIONS=PackageKit
 
 # A package would create /var/run, this is a fix
 
-ln -sf /run /var/run
+RUN ln -sf /run /var/run
 
 # Shortly after IBM took over Red Hat, they removed KDE.
 # So we have to use EPEL.
@@ -19,7 +19,7 @@ RUN dnf install -x $EXCLUSIONS -y plasma-workspace
 
 # Fix rootfiles
 
-mkdir -m 0700 -p /var/roothome
+RUN mkdir -m 0700 -p /var/roothome
 
 RUN dnf install -x $EXCLUSIONS -y \
      @base \
