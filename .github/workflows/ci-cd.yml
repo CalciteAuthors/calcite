@@ -81,7 +81,7 @@ jobs:
         run: dnf install -y lorax util-linux
       - name: Download upstream ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: curl -Lso upstream.iso https://nyc.mirrors.clouvider.net/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-boot.iso
+        run: curl -Lso upstream.iso https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/images/boot.iso
       - name: Build ISO
         if: steps.cache.outputs.cache-hit != 'true'
         run: mkksiso ks.cfg upstream.iso calcite-9.iso

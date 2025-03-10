@@ -2,7 +2,7 @@
 
 [![CI/CD](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml)
 
-This project replicates Kinoite but using bootc, and uses Rocky Linux instead of Fedora.
+This project replicates Kinoite but using bootc, and uses CentOS Stream instead of Fedora.
 
 ## Scope
 

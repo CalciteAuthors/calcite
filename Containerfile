@@ -1,4 +1,4 @@
-FROM ghcr.io/charles8191/rocky-bootc:r9
+FROM quay.io/centos-bootc/centos-bootc:stream9
 
 # Software stores typically break because they attempt to install an RPM and it doesn't work
 
