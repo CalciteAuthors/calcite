@@ -43,7 +43,9 @@ RUN dnf install -x $EXCLUSIONS -y \
      alsa-sof-firmware \
      containernetworking-plugins \
      dolphin \
+     dnf-plugins-core \
      firefox \
+     firewalld \
      flatpak \
      kcalc \
      konsole \
@@ -76,9 +78,9 @@ RUN sed -i 's,ExecStart=/usr/bin/bootc update --apply --quiet,ExecStart=/usr/bin
 
 # Plymouth wouldn't show otherwise
 
-RUN depmod -a
 RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
-    dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
+    depmod -a -b /usr/lib/modules/${kver} && \
+    dracut -vf /usr/lib/modules/${kver}/initramfs.img $kver
 
 RUN ostree container commit && \
     bootc container lint
