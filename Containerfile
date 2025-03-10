@@ -79,7 +79,7 @@ RUN sed -i 's,ExecStart=/usr/bin/bootc update --apply --quiet,ExecStart=/usr/bin
 # Plymouth wouldn't show otherwise
 
 RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
-    depmod -a -b /usr/lib/modules/${kver} && \
+    depmod -a $kver && \
     dracut -vf /usr/lib/modules/${kver}/initramfs.img $kver
 
 RUN ostree container commit && \
