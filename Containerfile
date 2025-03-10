@@ -76,6 +76,7 @@ RUN sed -i 's,ExecStart=/usr/bin/bootc update --apply --quiet,ExecStart=/usr/bin
 
 # Plymouth wouldn't show otherwise
 
+RUN depmod -a
 RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
     dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
 
