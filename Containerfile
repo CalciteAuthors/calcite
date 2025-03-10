@@ -76,6 +76,8 @@ RUN systemctl set-default graphical.target
 RUN sed -i 's,ExecStart=/usr/bin/bootc update --apply --quiet,ExecStart=/usr/bin/bootc update --quiet,g' \
   /usr/lib/systemd/system/bootc-fetch-apply-updates.service
 
+RUN systemctl enable firewalld
+
 # Plymouth wouldn't show otherwise
 
 RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
