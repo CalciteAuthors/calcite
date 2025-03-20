@@ -95,3 +95,6 @@ jobs:
             > [!WARNING]  
             > Installation **WILL FAIL** if there is no network connection set up while installing. If you can't provide one, **DO NOT INSTALL THIS SOFTWARE.**
           files: calcite-10.iso
+      - name: Report status
+        run: |
+          echo "- Cache hit: \`${{steps.cache.outputs.cache-hit}}\`" >> $GITHUB_STEP_SUMMARY
