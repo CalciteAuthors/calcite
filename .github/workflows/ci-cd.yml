@@ -74,7 +74,7 @@ jobs:
         id: cache
         uses: actions/cache@v4
         with:
-          path: calcite-9.iso
+          path: calcite-10.iso
           key: ${{steps.get-ym.outputs.ym}}-c10s-${{hashFiles('ks.cfg')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -84,7 +84,7 @@ jobs:
         run: curl -Lso upstream.iso https://mirror.stream.centos.org/10-stream/BaseOS/x86_64/os/images/boot.iso
       - name: Build ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: mkksiso ks.cfg upstream.iso calcite-9.iso
+        run: mkksiso ks.cfg upstream.iso calcite-10.iso
       - name: Release
         if: ${{github.event_name != 'pull_request'}}
         uses: softprops/action-gh-release@v2
@@ -94,4 +94,4 @@ jobs:
           body: |
             > [!WARNING]  
             > Installation **WILL FAIL** if there is no network connection set up while installing. If you can't provide one, **DO NOT INSTALL THIS SOFTWARE.**
-          files: calcite-9.iso
+          files: calcite-10.iso
