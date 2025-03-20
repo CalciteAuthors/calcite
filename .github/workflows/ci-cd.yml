@@ -86,7 +86,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: mkksiso ks.cfg upstream.iso calcite-10.iso
       - name: Release
-        if: ${{github.event_name != 'pull_request'}}
+        if: github.event_name != 'pull_request'
         uses: softprops/action-gh-release@v2
         with:
           name: Continuous
