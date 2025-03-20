@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # This launches a VM.
-# You will need localhost/calcite:latest in root's container storage. To do that, run this as root:
-# # podman build -t localhost/calcite:latest .
+# You will need localhost/calcite:main in root's container storage. To do that, run this as root:
+# # podman build -t localhost/calcite:main .
 # Alternatively, use another URL in the CONTAINER environment variable.
 
 set -euxo pipefail
 name=$(uuidgen)
-container=${CONTAINER:-localhost/calcite:latest}
+container=${CONTAINER:-localhost/calcite:main}
 
 cd ~/.cache
 
@@ -47,7 +47,13 @@ echo "| VNC: 127.0.0.1:5907 |"
 echo "+---------------------+"
 set -x
 
-/usr/libexec/qemu-kvm \
+export qemu=/bin/false
+test -f /usr/libexec/qemu-kvm && \
+ export qemu=/usr/libexec/qemu-kvm
+test -f /usr/bin/qemu-system-$(uname -m) && \
+ export qemu=/usr/bin/qemu-system-$(uname -m)
+
+$qemu \
  -M q35 \
  -cpu host \
  -accel kvm \

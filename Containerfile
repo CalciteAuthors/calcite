@@ -1,4 +1,4 @@
-FROM quay.io/centos-bootc/centos-bootc:stream9
+FROM quay.io/centos-bootc/centos-bootc:stream10
 
 # Software stores typically break because they attempt to install an RPM and it doesn't work
 
@@ -41,7 +41,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      @print-client \
      alsa-firmware \
      alsa-sof-firmware \
-     containernetworking-plugins \
+     centos-backgrounds \
      dolphin \
      dnf-plugins-core \
      firefox \
@@ -52,7 +52,6 @@ RUN dnf install -x $EXCLUSIONS -y \
      kscreen \
      linux-firmware \
      man-db \
-     mozilla-openh264 \
      plasma-breeze \
      plasma-discover \
      plasma-discover-flatpak \
@@ -64,10 +63,17 @@ RUN dnf install -x $EXCLUSIONS -y \
      rootfiles \
      sddm \
      sddm-breeze \
+     sddm-kcm \
      wget \
      wpa_supplicant
 
+# Fix terminal error messages
+
 RUN dnf remove -y console-login-helper-messages{,-profile}
+
+# Fix white SDDM
+
+RUN ln -s ./centos-day.png /usr/share/backgrounds/default.png
 
 RUN systemctl set-default graphical.target
 

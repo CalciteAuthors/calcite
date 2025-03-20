@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write      
+      packages: write
       id-token: write
     steps:
       - name: Checkout repository
@@ -75,13 +75,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: calcite-9.iso
-          key: ${{steps.get-ym.outputs.ym}}-c9s-${{hashFiles('ks.cfg')}}
+          key: ${{steps.get-ym.outputs.ym}}-c10s-${{hashFiles('ks.cfg')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: dnf install -y lorax util-linux
       - name: Download upstream ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: curl -Lso upstream.iso https://mirror.stream.centos.org/9-stream/BaseOS/x86_64/os/images/boot.iso
+        run: curl -Lso upstream.iso https://mirror.stream.centos.org/10-stream/BaseOS/x86_64/os/images/boot.iso
       - name: Build ISO
         if: steps.cache.outputs.cache-hit != 'true'
         run: mkksiso ks.cfg upstream.iso calcite-9.iso
