@@ -1,4 +1,0 @@
-ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature-verification
-%post --erroronfail
-bootc switch --mutate-in-place --transport=registry |CONTAINER_URL|
-%end

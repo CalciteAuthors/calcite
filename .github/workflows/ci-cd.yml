@@ -75,26 +75,26 @@ jobs:
         uses: actions/cache@v4
         with:
           path: calcite-10.iso
-          key: ${{steps.get-ym.outputs.ym}}-${{hashFiles('Containerfile', 'ks.cfg')}}
+          key: ${{steps.get-ym.outputs.ym}}-c10s-${{hashFiles('ks.cfg')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: dnf install -y skopeo lorax util-linux
+        run: dnf install -y lorax util-linux
       - name: Download upstream ISO
         if: steps.cache.outputs.cache-hit != 'true'
         run: curl -Lso upstream.iso https://mirror.stream.centos.org/10-stream/BaseOS/x86_64/os/images/boot.iso
-      - name: Download container
-        run: skopeo copy docker://${{env.REGISTRY}}/${{env.IMAGE_NAME}}:$(git rev-parse --abbrev-ref HEAD) oci:container
-      - name: Configure kickstart
-        run: sed "s@|CONTAINER_URL|@${CONTAINER_URL}@g" < ks.cfg.in > ks.cfg
-        env:
-          CONTAINER_URL: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.REGISTRY}}/${{env.IMAGE_NAME}}
       - name: Build ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: mkksiso -a container ks.cfg upstream.iso calcite-10.iso
-      - uses: actions/upload-artifact@v4
+        run: mkksiso ks.cfg upstream.iso calcite-10.iso
+      - name: Release
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
         with:
-          name: iso
-          path: calcite-10.iso
+          name: Continuous
+          tag_name: continuous
+          body: |
+            > [!WARNING]  
+            > Installation **WILL FAIL** if there is no network connection set up while installing. If you can't provide one, **DO NOT INSTALL THIS SOFTWARE.**
+          files: calcite-10.iso
       - name: Report status
         run: |
           echo "- Cache hit: \`${{steps.cache.outputs.cache-hit}}\`" >> $GITHUB_STEP_SUMMARY
