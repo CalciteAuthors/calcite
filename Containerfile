@@ -47,10 +47,10 @@ RUN dnf install -x $EXCLUSIONS -y \
      firefox \
      firewalld \
      flatpak \
+     kate \
      kcalc \
      konsole \
      kscreen \
-     kwrite \
      linux-firmware \
      man-db \
      plasma-breeze \
