@@ -50,6 +50,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      kcalc \
      konsole \
      kscreen \
+     kwrite \
      linux-firmware \
      man-db \
      plasma-breeze \
