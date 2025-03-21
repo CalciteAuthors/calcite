@@ -41,6 +41,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      @print-client \
      alsa-firmware \
      alsa-sof-firmware \
+     ark \
      centos-backgrounds \
      dolphin \
      dnf-plugins-core \
