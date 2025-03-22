@@ -67,6 +67,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      sddm \
      sddm-breeze \
      sddm-kcm \
+     spectacle \
      wget \
      wpa_supplicant
 
