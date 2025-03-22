@@ -48,6 +48,7 @@ RUN dnf install -x $EXCLUSIONS -y \
      firefox \
      firewalld \
      flatpak \
+     git \
      kate \
      kcalc \
      konsole \
