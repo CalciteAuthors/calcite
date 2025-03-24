@@ -42,9 +42,9 @@ RUN dnf install -x $EXCLUSIONS -y \
      alsa-firmware \
      alsa-sof-firmware \
      ark \
-     centos-backgrounds \
      dolphin \
      dnf-plugins-core \
+     f41-backgrounds-base \
      firefox \
      firewalld \
      flatpak \
@@ -77,7 +77,7 @@ RUN dnf remove -y console-login-helper-messages{,-profile}
 
 # Fix white SDDM
 
-RUN ln -s ./centos-day.png /usr/share/backgrounds/default.png
+RUN ln -s ./f41/default/f41-01-day.png /usr/share/backgrounds/default.png
 
 RUN systemctl set-default graphical.target
 
