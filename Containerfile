@@ -94,5 +94,4 @@ RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
     depmod -a $kver && \
     dracut -vf /usr/lib/modules/${kver}/initramfs.img $kver
 
-RUN ostree container commit && \
-    bootc container lint
+RUN bootc container lint
