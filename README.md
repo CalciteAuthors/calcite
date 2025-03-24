@@ -1,8 +1,6 @@
 # Calcite
 
-[![CI/CD](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/CalciteAuthors/calcite/actions/workflows/ci-cd.yml)
-
-This project replicates Kinoite but using bootc, and uses CentOS Stream instead of Fedora.
+This project replicates Kinoite but using bootc, and uses AlmaLinux instead of Fedora.
 
 ## Scope
 

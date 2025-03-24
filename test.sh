@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # This launches a VM.
-# You will need localhost/calcite:main in root's container storage. To do that, run this as root:
-# # podman build -t localhost/calcite:main .
+# You will need localhost/calcite:a10s in root's container storage. To do that, run this as root:
+# # podman build -t localhost/calcite:a10s .
 # Alternatively, use another URL in the CONTAINER environment variable.
 
 set -euxo pipefail
 name=$(uuidgen)
-container=${CONTAINER:-localhost/calcite:main}
+container=${CONTAINER:-localhost/calcite:a10s}
 
 cd ~/.cache
 

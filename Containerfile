@@ -1,4 +1,4 @@
-FROM quay.io/centos-bootc/centos-bootc:stream10
+FROM ghcr.io/charles25565/rocky-bootc:a10s
 
 # Software stores typically break because they attempt to install an RPM and it doesn't work
 
@@ -42,9 +42,9 @@ RUN dnf install -x $EXCLUSIONS -y \
      alsa-firmware \
      alsa-sof-firmware \
      ark \
-     centos-backgrounds \
      dolphin \
      dnf-plugins-core \
+     f41-backgrounds-base \
      firefox \
      firewalld \
      flatpak \
@@ -77,7 +77,7 @@ RUN dnf remove -y console-login-helper-messages{,-profile}
 
 # Fix white SDDM
 
-RUN ln -s ./centos-day.png /usr/share/backgrounds/default.png
+# RUN ln -s ./f41/default/f41-01-day.png /usr/share/backgrounds/default.png
 
 RUN systemctl set-default graphical.target
 
@@ -94,5 +94,4 @@ RUN kver=$(cd /usr/lib/modules && echo * | awk '{print $1}') && \
     depmod -a $kver && \
     dracut -vf /usr/lib/modules/${kver}/initramfs.img $kver
 
-RUN ostree container commit && \
-    bootc container lint
+RUN bootc container lint
