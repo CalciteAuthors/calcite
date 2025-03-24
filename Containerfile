@@ -77,7 +77,7 @@ RUN dnf remove -y console-login-helper-messages{,-profile}
 
 # Fix white SDDM
 
-RUN ln -s ./f41/default/f41-01-day.png /usr/share/backgrounds/default.png
+# RUN ln -s ./f41/default/f41-01-day.png /usr/share/backgrounds/default.png
 
 RUN systemctl set-default graphical.target
 
