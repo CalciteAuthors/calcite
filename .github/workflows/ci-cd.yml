@@ -74,17 +74,17 @@ jobs:
         id: cache
         uses: actions/cache@v4
         with:
-          path: calcite-10.iso
-          key: ${{steps.get-ym.outputs.ym}}-c10s-${{hashFiles('ks.cfg')}}
+          path: calcite-a10s-experiment.iso
+          key: ${{steps.get-ym.outputs.ym}}-a10s-${{hashFiles('ks.cfg')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: dnf install -y lorax util-linux
       - name: Download upstream ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: curl -Lso upstream.iso https://mirror.stream.centos.org/10-stream/BaseOS/x86_64/os/images/boot.iso
+        run: curl -Lso upstream.iso https://kitten.repo.almalinux.org/10-kitten/BaseOS/x86_64/os/images/boot.iso
       - name: Build ISO
         if: steps.cache.outputs.cache-hit != 'true'
-        run: mkksiso ks.cfg upstream.iso calcite-10.iso
+        run: mkksiso ks.cfg upstream.iso calcite-a10s-experiment.iso
       - name: Release
         if: github.event_name != 'pull_request'
         uses: softprops/action-gh-release@v2
@@ -94,7 +94,7 @@ jobs:
           body: |
             > [!WARNING]  
             > Installation **WILL FAIL** if there is no network connection set up while installing. If you can't provide one, **DO NOT INSTALL THIS SOFTWARE.**
-          files: calcite-10.iso
+          files: calcite-a10s-experiment.iso
       - name: Report status
         run: |
           echo "- Cache hit: \`${{steps.cache.outputs.cache-hit}}\`" >> $GITHUB_STEP_SUMMARY
